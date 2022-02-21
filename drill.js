@@ -105,7 +105,7 @@ function checkGuess() {
   result = document.getElementById('result')
 
   if(guess.value == correct.value) {
-    result.innerHTML = '✅';
+    result.innerHTML = '✔️';
     setTimeout(function(){getNext()}, 1000);
   } else {
     result.innerHTML = '❌';
