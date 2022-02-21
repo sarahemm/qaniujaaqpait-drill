@@ -1,4 +1,4 @@
-// TODO: figure out hi/hu/ha to better support non-qikiqtaaluk dialects
+// TODO: figure out hi/hu/ha to better support non-qikiqtaaluk dialects (once we have set selection)
 const chars = {
  "i": "ᐃ",
  "u": "ᐅ",
@@ -62,6 +62,7 @@ const chars = {
 }
 
 function startOrSkip() {
+  document.getElementById('guess').disabled = false;
   var chr = document.getElementById('char');
   document.getElementById('guess').value = chr.value;
   
@@ -73,7 +74,7 @@ function getNext() {
   var audio = document.getElementById('audio');
 
   document.getElementById('startButton').innerHTML = 'Skip';
-  document.getElementById('result').value = '';
+  document.getElementById('result').innerHTML = '';
   guessField = document.getElementById('guess')
   guessField.value = ''
   guessField.focus();

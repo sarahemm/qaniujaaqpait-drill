@@ -16,14 +16,14 @@
     <p class="lead mb-4">Type what you hear.</p>
     <div class="row justify-content-sm-center">
      <div class="form-floating col-md-2">
-      <input type="text" class="form-control" id="guess" width=2 onInput='checkGuess();'>
+      <input type="text" class="form-control" disabled id="guess" width=2 onInput='checkGuess();' onBlur='setTimeout(function(){document.getElementById("guess").focus()}, 10)'>
       <label for="guess">Guess</label>
      </div>
     </div>
     </div>
     <div class="row justify-content-sm-center">
      <div class="col pt-3">
-      <p class="h1" id='result'></p>
+      <p class="h1" id='result'>&nbsp;</p>
      </div>
     </div>
     <div class="row justify-content-sm-center">
