@@ -61,12 +61,22 @@ const chars = {
  "ła": "ᖤ"
 }
 
-function getNext() {
-  document.getElementById('guess').value = ''
-  document.getElementById('result').value = '';
+function startOrSkip() {
+  var chr = document.getElementById('char');
+  document.getElementById('guess').value = chr.value;
+  
+  setTimeout(function(){getNext()}, 1000);
+}
 
-  chr = document.getElementById('char');
-  audio = document.getElementById('audio');
+function getNext() {
+  var chr = document.getElementById('char');
+  var audio = document.getElementById('audio');
+
+  document.getElementById('startButton').innerHTML = 'Skip';
+  document.getElementById('result').value = '';
+  guessField = document.getElementById('guess')
+  guessField.value = ''
+  guessField.focus();
 
   idx = Math.floor(Math.random() * Object.keys(chars).length);
   chr.value = chars[Object.keys(chars)[idx]];
@@ -80,6 +90,7 @@ function getNext() {
 }
   
 function playClip() {
+  document.getElementById('guess').focus();
   audio = document.getElementById('audio');
   var audioClip = new Audio("./audio/" + audio.value + ".wav")
   audioClip.preload = 'auto';
@@ -98,6 +109,18 @@ function checkGuess() {
     setTimeout(function(){getNext()}, 1000);
   } else {
     result.innerHTML = '❌';
-    setTimeout(function(){guess.value = ''}, 1000);
+    setTimeout(function(){guess.value = ''; playClip();}, 1000);
+  }
+}
+
+function changeTitle() {
+  title = document.getElementById('title');
+
+  if(title.innerHTML.substring(0, 1) == 'q') {
+    title.innerHTML = 'ᖃᓂᐅᔮᖅᐸᐃᑦ practice';
+  } else if(title.innerHTML.substring(0, 1) == 'ᖃ') {
+    title.innerHTML = 'syllabics practice';
+  } else {
+    title.innerHTML = 'qaniujaaqpait practice';
   }
 }
