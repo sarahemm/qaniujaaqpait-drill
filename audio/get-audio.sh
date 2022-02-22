@@ -47,9 +47,20 @@ wget https://tusaalanga.ca/modules/custom/pronunciation/audio/va.wav; sleep 1
 wget https://tusaalanga.ca/modules/custom/pronunciation/audio/vi.wav; sleep 1
 wget https://tusaalanga.ca/modules/custom/pronunciation/audio/vu.wav; sleep 1
 
+# build the padded versions
+for WAV in ?.wav ??.wav ???.wav ??_??.wav; do sox 1s-silent.wav $WAV padded-$WAV; done
+
 ln -s si_hi.wav si.wav
 ln -s si_hi.wav hi.wav
 ln -s su_hu.wav su.wav
 ln -s su_hu.wav hu.wav
 ln -s sa_ha.wav sa.wav
 ln -s sa_ha.wav ha.wav
+
+ln -s padded-si_hi.wav padded-si.wav
+ln -s padded-si_hi.wav padded-hi.wav
+ln -s padded-su_hu.wav padded-su.wav
+ln -s padded-su_hu.wav padded-hu.wav
+ln -s padded-sa_ha.wav padded-sa.wav
+ln -s padded-sa_ha.wav padded-ha.wav
+
