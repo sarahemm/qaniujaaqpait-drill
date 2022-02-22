@@ -61,6 +61,9 @@ const chars = {
  "ła": "ᖤ"
 }
 
+var stats = {};
+var nbrGuesses = 0;
+
 function startOrSkip() {
   document.getElementById('guess').disabled = false;
   var chr = document.getElementById('char');
@@ -70,6 +73,7 @@ function startOrSkip() {
 }
 
 function getNext() {
+  nbrGuesses = 0;
   var chr = document.getElementById('char');
   var audio = document.getElementById('audio');
 
@@ -105,13 +109,33 @@ function checkGuess() {
   correct = document.getElementById('char')
   result = document.getElementById('result')
 
+  nbrGuesses++;
   if(guess.value == correct.value) {
     result.innerHTML = '✔️';
     setTimeout(function(){getNext()}, 1000);
+    if(stats.hasOwnProperty(correct.value)) {
+      // average the new one with the existing value
+      stats[correct.value] = (stats[correct.value] + nbrGuesses) / 2;
+    } else {
+      // first entry for this one
+      stats[correct.value] = nbrGuesses;
+    }
+    updateStats();
   } else {
     result.innerHTML = '❌';
     setTimeout(function(){guess.value = ''; playClip();}, 1000);
   }
+}
+
+function updateStats() {
+  var statsHtml = "<table class='table table-striped'>";
+
+  Object.keys(stats).sort().forEach(function(key) {
+    statsHtml = statsHtml + "<tr><td>" + key + "</td><td>" + stats[key] + " tries avg.</td></tr>";
+  });
+
+  statsHtml = statsHtml + "</table>"
+  document.getElementById('stats').innerHTML = statsHtml;
 }
 
 function changeTitle() {
