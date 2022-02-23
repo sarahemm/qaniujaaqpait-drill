@@ -153,4 +153,5 @@ function changeTitle() {
   } else {
     title.innerHTML = 'qaniujaaqpait practice';
   }
+  document.title = title.innerHTML;
 }
