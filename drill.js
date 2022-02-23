@@ -63,6 +63,7 @@ const chars = {
 
 var stats = {};
 var nbrGuesses = 0;
+var startTime;
 
 function startOrSkip() {
   document.getElementById('guess').disabled = false;
@@ -87,10 +88,10 @@ function getNext() {
   chr.value = chars[Object.keys(chars)[idx]];
   audio.value = Object.keys(chars)[idx];
 
-  playClip();
+  playClip(true);
 }
   
-function playClip() {
+function playClip(firstPlay) {
   document.getElementById('guess').focus();
   audio = document.getElementById('audio');
   var audioClip;
@@ -103,6 +104,10 @@ function playClip() {
   audioClip.onloadeddata = function () {
   };
   audioClip.play();
+  // TODO: should start the timer once the audio has played through instead
+  if(firstPlay) {
+    startTime = Date.now();
+  }
 }
 
 function checkGuess() {
@@ -111,15 +116,17 @@ function checkGuess() {
   result = document.getElementById('result')
 
   nbrGuesses++;
+  timeSpent = Date.now() - startTime;
   if(guess.value == correct.value) {
     result.innerHTML = '✔️';
     setTimeout(function(){getNext()}, 1000);
     if(stats.hasOwnProperty(correct.value)) {
-      // average the new one with the existing value
-      stats[correct.value] = (stats[correct.value] + nbrGuesses) / 2;
+      // average the new stats with the existing values
+      stats[correct.value][0] = (stats[correct.value][0] + nbrGuesses) / 2;
+      stats[correct.value][1] = (stats[correct.value][1] + timeSpent) / 2;
     } else {
       // first entry for this one
-      stats[correct.value] = nbrGuesses;
+      stats[correct.value] = [nbrGuesses, timeSpent];
     }
     updateStats();
   } else {
@@ -132,7 +139,11 @@ function updateStats() {
   var statsHtml = "<table class='table table-striped'>";
 
   Object.keys(stats).sort().forEach(function(key) {
-    statsHtml = statsHtml + "<tr><td>" + key + "</td><td>" + stats[key] + " tries avg.</td></tr>";
+    if(stats[key] == 1) {
+     statsHtml = statsHtml + "<tr><td>" + key + "</td><td>" + stats[key][0] + " try, " + stats[key][1]/1000 + " secs avg.</td></tr>";
+    } else {
+     statsHtml = statsHtml + "<tr><td>" + key + "</td><td>" + stats[key][0] + " tries, " + stats[key][1]/1000 + " secs avg.</td></tr>";
+    }
   });
 
   statsHtml = statsHtml + "</table>"
