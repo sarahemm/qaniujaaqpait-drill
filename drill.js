@@ -87,17 +87,18 @@ function getNext() {
   chr.value = chars[Object.keys(chars)[idx]];
   audio.value = Object.keys(chars)[idx];
 
-  var audioClip = new Audio("./audio/" + audio.value + ".wav")
-  audioClip.preload = 'auto';
-  audioClip.onloadeddata = function () {
-  };
-  audioClip.play();
+  playClip();
 }
   
 function playClip() {
   document.getElementById('guess').focus();
   audio = document.getElementById('audio');
-  var audioClip = new Audio("./audio/" + audio.value + ".wav")
+  var audioClip;
+  if(document.getElementById('padAudio').checked) {
+    audioClip = new Audio("./audio/padded-" + audio.value + ".wav")
+  } else {
+    audioClip = new Audio("./audio/" + audio.value + ".wav")
+  }
   audioClip.preload = 'auto';
   audioClip.onloadeddata = function () {
   };
@@ -136,6 +137,10 @@ function updateStats() {
 
   statsHtml = statsHtml + "</table>"
   document.getElementById('stats').innerHTML = statsHtml;
+}
+
+function updateSettings() {
+  padAudio = document.getElementById('padAudio').checked;
 }
 
 function changeTitle() {
