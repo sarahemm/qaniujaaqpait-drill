@@ -1,3 +1,4 @@
+<!DOCTYPE html>
 <html>
  <head>
   <title>qaniujaaqpait practice</title>
@@ -16,7 +17,7 @@
     <p class="lead mb-4">Type what you hear.</p>
     <div class="row justify-content-sm-center">
      <div class="form-floating col-md-2">
-      <input type="text" class="form-control" disabled id="guess" width=2 onInput='checkGuess();' onBlur='setTimeout(function(){document.getElementById("guess").focus()}, 10)'>
+      <input type="text" class="form-control" disabled id="guess" onInput='checkGuess();' onBlur='setTimeout(function(){document.getElementById("guess").focus()}, 10)'>
       <label for="guess">Guess</label>
      </div>
     </div>
@@ -47,21 +48,23 @@
    <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="settingsModalLabel">Settings</h5>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+       <h5 class="modal-title" id="settingsModalLabel">Settings</h5>
+       <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">
        <div class='form-check'>
         <input type='checkbox' id='padAudio' class='form-check-input'>
         <label class='form-check-label' for='padAudio'>Pad audio with silence (bluetooth hearing aid compatibility)</label>
        </div>
+       <div class='form-floating'>
+	<input type="text" id="includeChars" class='form-control' value='ᐃᐅᐊᐱᐳᐸᑎᑐᑕᑭᑯᑲᒋᒍᒐᒥᒧᒪᓂᓄᓇᓯᓱᓴᓕᓗᓚᔨᔪᔭᕕᕗᕙᕆᕈᕋᕿᖁᖃᖏᖑᖓᖠᖢᖤ'>
+       </div>
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Save and Close</button>
       </div>
+     </div>
     </div>
   </div>
-</div>
-
  </body>
 </html>

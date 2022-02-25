@@ -77,6 +77,7 @@ function getNext() {
   nbrGuesses = 0;
   var chr = document.getElementById('char');
   var audio = document.getElementById('audio');
+  var includeChars = document.getElementById('includeChars').value;
 
   document.getElementById('startButton').innerHTML = 'Skip';
   document.getElementById('result').innerHTML = '';
@@ -84,7 +85,9 @@ function getNext() {
   guessField.value = ''
   guessField.focus();
 
-  idx = Math.floor(Math.random() * Object.keys(chars).length);
+  // pick a random character from the list of included ones the user gave
+  var thisChar = includeChars.substr(Math.floor(Math.random() * includeChars.length), 1)
+  var idx = Object.values(chars).findIndex(char => char == thisChar);
   chr.value = chars[Object.keys(chars)[idx]];
   audio.value = Object.keys(chars)[idx];
 
