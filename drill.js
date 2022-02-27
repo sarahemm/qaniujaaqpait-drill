@@ -152,10 +152,6 @@ function updateStats() {
   document.getElementById('stats').innerHTML = statsHtml;
 }
 
-function updateSettings() {
-  padAudio = document.getElementById('padAudio').checked;
-}
-
 function changeTitle() {
   title = document.getElementById('title');
 
@@ -188,6 +184,29 @@ function moveSelectedListItems(from, to) {
   }));
 }
 
+function saveSettings() {
+ Cookies.set('padAudio', $('#padAudio')[0].checked, { sameSite: 'lax', expires: 3650 });
+ Cookies.set('excludedChars', Array.from(document.querySelector("#unSelectedChars")).map(x => x.value).join(''), { sameSite: 'lax', expires: 3650 });
+}
+
+function loadSettings() {
+ // check/uncheck the Pad Audio box as required
+ var padAudio = Cookies.get('padAudio');
+ if(padAudio && padAudio == 'true') {
+  $('#padAudio')[0].checked = true;
+ }
+
+ // select any chars the user has excluded out of the active set
+ var excludedChars = Cookies.get('excludedChars');
+ if(!excludedChars) { return; }
+ for (var i = 0; i < excludedChars.length; i++) {
+   var thisChar = excludedChars.charAt(i);
+   $('#selectedChars option[value="' + thisChar + '"]')[0].selected = true;
+ }
+ // move the selected items out of the active set
+ moveSelectedListItems('selectedChars', 'unSelectedChars');
+}
+
 window.addEventListener('DOMContentLoaded', (event) => {
  var selectedBox = document.getElementById('selectedChars');
  const allChars = "ᐃᐅᐊᐱᐳᐸᑎᑐᑕᑭᑯᑲᒋᒍᒐᒥᒧᒪᓂᓄᓇᓯᓱᓴᓕᓗᓚᔨᔪᔭᕕᕗᕙᕆᕈᕋᕿᖁᖃᖏᖑᖓᖠᖢᖤ";
@@ -198,6 +217,7 @@ window.addEventListener('DOMContentLoaded', (event) => {
    newOpt.text = thisChar;
    selectedBox.add(newOpt);
  }
-});
 
+ loadSettings();
+});
 
