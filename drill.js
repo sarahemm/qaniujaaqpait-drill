@@ -77,7 +77,7 @@ function getNext() {
   nbrGuesses = 0;
   var chr = document.getElementById('char');
   var audio = document.getElementById('audio');
-  var includeChars = document.getElementById('includeChars').value;
+  var includeChars = Array.from(document.querySelector("#selectedChars")).map(x => x.value).join('');
 
   document.getElementById('startButton').innerHTML = 'Skip';
   document.getElementById('result').innerHTML = '';
@@ -169,3 +169,36 @@ function changeTitle() {
   }
   document.title = title.innerHTML;
 }
+
+function moveSelectedListItems(from, to) {
+ // move any selected characters from the Selected box to the Unselected box
+ document.querySelectorAll("#" + from + " option:checked").forEach(opt => {
+  unselOpt = document.createElement('option');
+  unselOpt.value = opt.value;
+  unselOpt.text = opt.text;
+  document.querySelector("#" + to).add(unselOpt);
+  opt.remove();
+ });
+
+ // sort the list that had items added
+ $("#" + to).append($("#" + to + " option")
+  .remove().sort(function(a, b) {
+   var at = $(a).text(),
+       bt = $(b).text();
+   return (at > bt) ? 1 : ((at < bt) ? -1 : 0);
+  }));
+}
+
+window.addEventListener('DOMContentLoaded', (event) => {
+ var selectedBox = document.getElementById('selectedChars');
+ const allChars = "ᐃᐅᐊᐱᐳᐸᑎᑐᑕᑭᑯᑲᒋᒍᒐᒥᒧᒪᓂᓄᓇᓯᓱᓴᓕᓗᓚᔨᔪᔭᕕᕗᕙᕆᕈᕋᕿᖁᖃᖏᖑᖓᖠᖢᖤ";
+ for (var i = 0; i < allChars.length; i++) {
+   var thisChar = allChars.charAt(i);
+   var newOpt = document.createElement('option');
+   newOpt.value = thisChar;
+   newOpt.text = thisChar;
+   selectedBox.add(newOpt);
+ }
+});
+
+
