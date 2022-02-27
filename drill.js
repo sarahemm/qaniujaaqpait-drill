@@ -1,4 +1,3 @@
-// TODO: figure out hi/hu/ha to better support non-qikiqtaaluk dialects (once we have set selection)
 const chars = {
  "i": "ᐃ",
  "u": "ᐅ",
